@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
 import './App.css';
 import Parent from './components/parentToChild/parent';
+import { connect } from 'react-redux';
 
 class App extends Component {
-  state = {
-    title:'placeholder title'
-  }
-
-  changeTheWorld = (newTitle) => {
-      this.setState({title:newTitle});
-  }
-
   render() {
     return (
       <div className="App">
-         <Parent changeTheWorldEvent={this.changeTheWorld.bind(this, 'new world')} 
-         keepTheWorldSameEvent={this.changeTheWorld.bind(this, 'same world')}
-         title={this.state.title}/>
+        <h1> {this.props.title}</h1>
+        <Parent changeTheWorld={"CHANGE"}
+          keepTheWorldSame={"SAME"}/>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    title: state.title
+  }
+}
+
+export default connect(mapStateToProps)(App);
